@@ -1,7 +1,7 @@
 import { NgModule, Injector, CUSTOM_ELEMENTS_SCHEMA }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';  // replaces previous Http service
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DemoService } from './demo.service';   // our custom service, see below
 import {createCustomElement} from '@angular/elements';
 
@@ -16,7 +16,7 @@ import { ItemCardComponent } from './item-card/item-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 @NgModule({
-    imports: [BrowserModule, FormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule],
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule],
     declarations: [AppComponent, ItemCardComponent],
     entryComponents: [ItemCardComponent],
     providers: [DemoService],

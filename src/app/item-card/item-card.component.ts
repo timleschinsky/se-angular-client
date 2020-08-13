@@ -1,43 +1,31 @@
-import { Component, OnInit, Output, EventEmitter } from  '@angular/core';
-import {DemoService} from '../demo.service';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit } from  '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder} from '@angular/forms';
 
 @Component({
-  selector: 'app-item-card',
   templateUrl: './item-card.component.html',
   styleUrls: ['./item-card.component.css']
 })
-export class ItemCardComponent implements OnInit {
+export class ItemCardComponent{
 
   form: FormGroup;
-  description: string = '';
-  manufacturer: string = '';
-  name: string = '';
-  price: number = 0;
-  tax: number = 0;
 
-  item = [];
-
-  //constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ItemCardComponent>) {}
-
-  @Output() createNewItem = new EventEmitter<any>();
-
-  create(){
-    this.item.push(this.description);
-    this.item.push(this.manufacturer);
-    this.item.push(this.name);
-    this.item.push(this.price);
-    this.item.push(this.tax);
-    this.createNewItem.emit(this.item);
-  }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private dialogRef: MatDialogRef<ItemCardComponent>
+  ) {}
 
   ngOnInit(): void {
-    /*
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    this.matDialog.open(ItemCardComponent, dialogConfig);
-    */
+    this.form = this.formBuilder.group({
+      description: '',
+      manufacturer: '',
+      name: '',
+      price: 0,
+      tax: 0
+    })
+  }
+
+  submit(form){
+    this.dialogRef.close(`${form.value.description}, ${form.value.manufacturer}, ${form.value.name}, ${form.value.price}, ${form.value.tax}`);
   }
 }

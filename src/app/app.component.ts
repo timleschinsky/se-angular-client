@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {DemoService} from './demo.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { ItemCardComponent } from './item-card/item-card.component';
+import { filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,18 @@ export class AppComponent {
 
   itemDialogRef: MatDialogRef<ItemCardComponent>;
 
+  tempItem = [];
   public items = [];
 
   constructor(private _demoService: DemoService, private dialog: MatDialog) {}
 
   openItemDialog() {
     this.itemDialogRef = this.dialog.open(ItemCardComponent);
+
+    this.itemDialogRef
+      .afterClosed()
+      .pipe(filter(description => description))
+      .subscribe(description => this.tempItem.push({description, content: '' }));
   } 
 
   listItems() {

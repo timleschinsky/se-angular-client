@@ -1,28 +1,26 @@
-<mat-card>
+<form [formGroup]="form" (ngSubmit)="submit(form)">
     <mat-card-header>
         <mat-card-title>Create Item</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form>
-            <mat-form-field>
-                <input  matInput  placeholder="description" [(ngModel)]="description"  type="text" name="description">
-            </mat-form-field>
-            <mat-form-field>
-                <input  matInput  placeholder="manufacturer" [(ngModel)]="manufacturer"  type="text"  name="manufacturer">
-            </mat-form-field>
-            <mat-form-field>
-                <input  matInput  placeholder="name" [(ngModel)]="name"  type="name"  name="text">
-            </mat-form-field>
-            <mat-form-field>
-                <input  matInput  placeholder="price" [(ngModel)]="price"  type="price"  name="number">
-            </mat-form-field>
-            <mat-form-field>
-                <input  matInput  placeholder="tax" [(ngModel)]="tax"  type="tax"  name="number">
-            </mat-form-field>
-        </form>
+        <mat-form-field>
+            <input  matInput  placeholder="description" formControlName="description"  type="text" name="description">
+        </mat-form-field>
+        <mat-form-field>
+            <input  matInput  placeholder="manufacturer" formControlName="manufacturer"  type="text"  name="manufacturer">
+        </mat-form-field>
+        <mat-form-field>
+            <input  matInput  placeholder="name" formControlName="name"  type="name"  name="text">
+        </mat-form-field>
+        <mat-form-field>
+            <input  matInput  placeholder="price" formControlName="price"  type="price"  name="number">
+        </mat-form-field>
+        <mat-form-field>
+            <input  matInput  placeholder="tax" formControlName="tax"  type="tax"  name="number">
+        </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-        <button  mat-raised-button (click)="create()"  color="primary">Create</button>
-        <button  mat-raised-button mat-dialog-close  color="primary">Cancel</button>
+        <button  mat-raised-button type="submit" color="primary">Create</button>
+        <button  mat-raised-button type="button" color="primary" mat-dialog-close>Cancel</button>
     </mat-card-actions>
-</mat-card>
+</form>
