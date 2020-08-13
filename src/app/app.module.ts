@@ -17,10 +17,11 @@ import { AppComponent }  from './app.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemsDetailCardComponent } from './items-detail-card/items-detail-card.component';
+import { ItemDetailCardComponent } from './item-detail-card/item-detail-card.component';
  
 @NgModule({
     imports: [BrowserModule, FormsModule, MatIconModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule],
-    declarations: [AppComponent, ItemCardComponent, ItemsDetailCardComponent],
+    declarations: [AppComponent, ItemCardComponent, ItemsDetailCardComponent, ItemDetailCardComponent],
     entryComponents: [ItemCardComponent],
     providers: [DemoService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

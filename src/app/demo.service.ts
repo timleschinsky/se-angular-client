@@ -16,11 +16,11 @@ export class DemoService {
         return this.http.get('http://localhost:8080/item/');
     }
 
-    getItem() {
+    getItem(id) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         //let params = new HttpParams().set("id", "0"); {params: params}
-        return this.http.get('http://localhost:8080/item/1');
+        return this.http.get(`http://localhost:8080/item/${id}`);
     }
 
     createItem(item) {

@@ -24,12 +24,10 @@
     <button class="card" target="_blank" rel="noopener" (click)="listItems()">
       List Items with details
     </button>
-    <button class="card" target="_blank" rel="noopener" (click)="getItem()">
-      Get Item by ID
-    </button>
   </div>
   <div class="card-container" id="list-container">
     <div class="card" *ngFor="let item of items" (click)="openItemDialog(item, item.id)" id="{{item.id}}">
+        <mat-icon (click)="getItem(item.id, $event)">info</mat-icon>
         {{item.name}}
         <mat-icon (click)="deleteItem(item.id, $event)">delete</mat-icon>
     </div>
