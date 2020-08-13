@@ -3,6 +3,7 @@ import {DemoService} from './demo.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { filter} from 'rxjs/operators';
+import { ItemsDetailCardComponent } from './items-detail-card/items-detail-card.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { filter} from 'rxjs/operators';
 export class AppComponent {
 
   itemDialogRef: MatDialogRef<ItemCardComponent>;
+  itemListDialogRef: MatDialogRef<ItemsDetailCardComponent>;
 
   tempItem = [];
   public items = [];
@@ -61,7 +63,14 @@ export class AppComponent {
   listItems() {
     console.log('listing..');
     this._demoService.listItems().subscribe(
-      data => {console.log(data)},
+      data => {console.log(data);
+                this.itemListDialogRef = this.dialog.open(ItemsDetailCardComponent, {
+                  hasBackdrop: false,
+                  data: {
+                    items: data
+                  }
+                });
+              },
       err => console.error(err),
       () => console.log('done loading items')
     );
