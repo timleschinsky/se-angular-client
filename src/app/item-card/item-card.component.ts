@@ -26,6 +26,6 @@ export class ItemCardComponent{
   }
 
   submit(form){
-    this.dialogRef.close(`${form.value.description}, ${form.value.manufacturer}, ${form.value.name}, ${form.value.price}, ${form.value.tax}`);
+    this.dialogRef.close({description: form.value.description, manufacturer: form.value.manufacturer, name: form.value.name, price: form.value.price, tax: form.value.tax});
   }
 }

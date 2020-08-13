@@ -19,12 +19,20 @@ export class AppComponent {
   constructor(private _demoService: DemoService, private dialog: MatDialog) {}
 
   openItemDialog() {
-    this.itemDialogRef = this.dialog.open(ItemCardComponent);
+    this.itemDialogRef = this.dialog.open(ItemCardComponent, {
+      hasBackdrop: false
+    });
 
     this.itemDialogRef
       .afterClosed()
-      .pipe(filter(description => description))
-      .subscribe(description => this.tempItem.push({description, content: '' }));
+      .subscribe(result  => {
+        this.tempItem.push(result.description);
+        this.tempItem.push(result.manufacturer);
+        this.tempItem.push(result.name);
+        this.tempItem.push(result.price);
+        this.tempItem.push(result.tax);
+        this.createNew(this.tempItem);
+        this.tempItem.length = 0;});
   } 
 
   listItems() {
