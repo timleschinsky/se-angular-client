@@ -1,16 +1,32 @@
+import { NgModule, Injector, CUSTOM_ELEMENTS_SCHEMA }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';  // replaces previous Http service
+import { FormsModule } from '@angular/forms';
+import { DemoService } from './demo.service';   // our custom service, see below
+import {createCustomElement} from '@angular/elements';
 
-import { AppComponent } from './app.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialogModule } from '@angular/material/dialog';
 
+import { AppComponent }  from './app.component';
+import { ItemCardComponent } from './item-card/item-card.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+ 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    imports: [BrowserModule, FormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule],
+    declarations: [AppComponent, ItemCardComponent],
+    entryComponents: [ItemCardComponent],
+    providers: [DemoService],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(injector: Injector) {
+    const custom = createCustomElement(ItemCardComponent,
+      {injector: injector});
+    customElements.define('app-item-card', custom);
+  }
+}
