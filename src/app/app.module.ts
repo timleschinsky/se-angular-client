@@ -11,12 +11,14 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule } from '@angular/material/dialog';
 
+import { MatIconModule } from '@angular/material/icon';
+
 import { AppComponent }  from './app.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule],
+    imports: [BrowserModule, FormsModule, MatIconModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule],
     declarations: [AppComponent, ItemCardComponent],
     entryComponents: [ItemCardComponent],
     providers: [DemoService],

@@ -8,6 +8,7 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <!-- Toolbar -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="toolbar" role="banner">
 </div>
 
@@ -26,12 +27,12 @@
     <button class="card" target="_blank" rel="noopener" (click)="getItem()">
       Get Item by ID
     </button>
-    <button class="card" target="_blank" rel="noopener" (click)="deleteItem()">
-      Delete Item
-    </button>
   </div>
-  <div class="card-container">
-    <div class="card" *ngFor="let item of items">{{item.name}}</div>
+  <div class="card-container" id="list-container">
+    <div class="card" (click)="openItemDialog(item)" *ngFor="let item of items" id="{{item.id}}">
+        {{item.name}}
+        <mat-icon (click)="deleteItem(item.id, $event)">delete</mat-icon>
+    </div>
   </div>
   <!-- Footer -->
   <footer>

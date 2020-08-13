@@ -30,10 +30,18 @@ export class DemoService {
         return this.http.post('http://localhost:8080/item/', {description: item[0], manufacturer: item[1], name: item[2], price: item[3], tax: item[4]}, {headers: {'Access-Control-Allow-Origin' : '*'}});
     }
 
-    deleteItem() {
+    deleteItem(index) {
         console.log('Deleting..');
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.delete('http://localhost:8080/item/2');
+        return this.http.delete(`http://localhost:8080/item/${index}`);
+    }
+
+    updateItem(item, index) {
+        console.log('Updating..');
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let params = new HttpParams().set("item", item);
+        return this.http.put(`http://localhost:8080/item/${index+1}`, {description: item[0], manufacturer: item[1], name: item[2], price: item[3], tax: item[4]}, {headers: {'Access-Control-Allow-Origin' : '*'}});
     }
 }

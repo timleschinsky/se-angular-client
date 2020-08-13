@@ -18,21 +18,44 @@ export class AppComponent {
 
   constructor(private _demoService: DemoService, private dialog: MatDialog) {}
 
-  openItemDialog() {
+  openItemDialog(item?) {
     this.itemDialogRef = this.dialog.open(ItemCardComponent, {
-      hasBackdrop: false
+      hasBackdrop: false,
+      data: {
+        description: item ? item.description : '',
+        manufacturer: item ? item.manufacturer : '',
+        name: item ? item.name : '',
+        price: item ? item.price : 0,
+        tax: item ? item.tax : 0,
+      }
     });
 
     this.itemDialogRef
       .afterClosed()
       .subscribe(result  => {
-        this.tempItem.push(result.description);
-        this.tempItem.push(result.manufacturer);
-        this.tempItem.push(result.name);
-        this.tempItem.push(result.price);
-        this.tempItem.push(result.tax);
-        this.createNew(this.tempItem);
-        this.tempItem.length = 0;});
+        if(item) {
+          const index = this.items.findIndex(f => f.name == item.name);
+          if(index !== -1) {
+            this.tempItem.push(result.description);
+            this.tempItem.push(result.manufacturer);
+            this.tempItem.push(result.name);
+            this.tempItem.push(result.price);
+            this.tempItem.push(result.tax);
+            this.updateItem(this.tempItem, index);
+            this.tempItem.length = 0;
+          }
+        } else {
+          if(result !== ''){
+            this.tempItem.push(result.description);
+            this.tempItem.push(result.manufacturer);
+            this.tempItem.push(result.name);
+            this.tempItem.push(result.price);
+            this.tempItem.push(result.tax);
+            this.createNew(this.tempItem);
+            this.tempItem.length = 0;
+          }
+        }
+      });
   } 
 
   listItems() {
@@ -56,18 +79,38 @@ export class AppComponent {
   createNew(item) {
     console.log('Creating..');
     this._demoService.createItem(item).subscribe(
-      data => {this.items.push(data)},
+      data => {this.items.push(data);
+                console.log(data);},
       err => console.error(err),
       () => console.log("created..")
     );
   }
 
-  deleteItem() {
+  deleteItem(index, event) {
+    event.stopPropagation();
     console.log('deleting..');
-    this._demoService.deleteItem().subscribe(
-      data => {console.log(data)},
+    console.log(index);
+    this._demoService.deleteItem(index).subscribe(
+      data => {console.log(this.items);
+                this.items.splice(this.items.findIndex(f => f.id = index), 1);
+                console.log(this.items);
+                console.log(index);
+                console.log(this.items.length);},
       err => console.error(err),
       () => console.log('done deleting item')
     );
+  }
+
+  updateItem(item, index) {
+    console.log('updating..');
+    this._demoService.updateItem(item, index).subscribe(
+      data => this.items[index] = data,
+      err => console.error(err),
+      () => console.log('done updating')
+    );
+  }
+
+  updateCards() {
+
   }
 }
