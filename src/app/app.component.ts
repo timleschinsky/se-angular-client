@@ -18,7 +18,7 @@ export class AppComponent {
 
   constructor(private _demoService: DemoService, private dialog: MatDialog) {}
 
-  openItemDialog(item?) {
+  openItemDialog(item?, id?) {
     this.itemDialogRef = this.dialog.open(ItemCardComponent, {
       hasBackdrop: false,
       data: {
@@ -27,7 +27,6 @@ export class AppComponent {
         name: item ? item.name : '',
         price: item ? item.price : 0,
         tax: item ? item.tax : 0,
-        id: item ? item.id : ''
       }
     });
 
@@ -42,7 +41,7 @@ export class AppComponent {
             this.tempItem.push(result.name);
             this.tempItem.push(result.price);
             this.tempItem.push(result.tax);
-            this.updateItem(this.tempItem, result.id);
+            this.updateItem(this.tempItem, id);
             this.tempItem.length = 0;
           }
         } else {
@@ -85,12 +84,11 @@ export class AppComponent {
       err => console.error(err),
       () => console.log("created..")
     );
+    console.log(this.items);
   }
 
   deleteItem(id, event) {
     event.stopPropagation();
-    console.log(id);
-    console.log(this.items);
     console.log('deleting..');
     this._demoService.deleteItem(id).subscribe(
       data => {this.items.splice(this.items.findIndex(f => f.id == id), 1);},
@@ -100,19 +98,16 @@ export class AppComponent {
   }
 
   updateItem(item, id) {
-    console.log(id);
+    item.id = id;
     console.log(this.items);
     console.log('updating..');
     this._demoService.updateItem(item, id).subscribe(
-      data => {console.log(this.items);
+      data => {console.log(data);
                 this.items[this.items.findIndex(f => f.id == id)] = data;
                 console.log(this.items);},
       err => console.error(err),
       () => console.log('done updating')
     );
-  }
-
-  updateCards() {
-
+    console.log(id);
   }
 }

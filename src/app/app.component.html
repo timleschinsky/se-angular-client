@@ -29,7 +29,7 @@
     </button>
   </div>
   <div class="card-container" id="list-container">
-    <div class="card" (click)="openItemDialog(item)" *ngFor="let item of items" id="{{item.id}}">
+    <div class="card" *ngFor="let item of items" (click)="openItemDialog(item, item.id)" id="{{item.id}}">
         {{item.name}}
         <mat-icon (click)="deleteItem(item.id, $event)">delete</mat-icon>
     </div>
