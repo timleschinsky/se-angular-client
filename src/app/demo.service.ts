@@ -37,11 +37,11 @@ export class DemoService {
         return this.http.delete(`http://localhost:8080/item/${index}`);
     }
 
-    updateItem(item, index) {
+    updateItem(item, id) {
         console.log('Updating..');
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let params = new HttpParams().set("item", item);
-        return this.http.put(`http://localhost:8080/item/${index+1}`, {description: item[0], manufacturer: item[1], name: item[2], price: item[3], tax: item[4]}, {headers: {'Access-Control-Allow-Origin' : '*'}});
+        return this.http.put(`http://localhost:8080/item/${id}`, {description: item[0], manufacturer: item[1], name: item[2], price: item[3], tax: item[4]}, {headers: {'Access-Control-Allow-Origin' : '*'}});
     }
 }

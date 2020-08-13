@@ -22,11 +22,12 @@ export class ItemCardComponent{
       manufacturer: this.data? this.data.manufacturer : '',
       name: this.data? this.data.name : '',
       price: this.data? this.data.price : 0,
-      tax: this.data? this.data.tax : 0
+      tax: this.data? this.data.tax : 0,
+      id: this.data ? this.data.id : ''
     })
   }
 
   submit(form){
-    this.dialogRef.close({description: form.value.description, manufacturer: form.value.manufacturer, name: form.value.name, price: form.value.price, tax: form.value.tax});
+    this.dialogRef.close({description: form.value.description, manufacturer: form.value.manufacturer, name: form.value.name, price: form.value.price, tax: form.value.tax, id: form.value.id});
   }
 }

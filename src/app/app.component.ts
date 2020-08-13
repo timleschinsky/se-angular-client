@@ -27,6 +27,7 @@ export class AppComponent {
         name: item ? item.name : '',
         price: item ? item.price : 0,
         tax: item ? item.tax : 0,
+        id: item ? item.id : ''
       }
     });
 
@@ -34,14 +35,14 @@ export class AppComponent {
       .afterClosed()
       .subscribe(result  => {
         if(item) {
-          const index = this.items.findIndex(f => f.name == item.name);
+          const index = this.items.findIndex(f => f.id == item.id);
           if(index !== -1) {
             this.tempItem.push(result.description);
             this.tempItem.push(result.manufacturer);
             this.tempItem.push(result.name);
             this.tempItem.push(result.price);
             this.tempItem.push(result.tax);
-            this.updateItem(this.tempItem, index);
+            this.updateItem(this.tempItem, result.id);
             this.tempItem.length = 0;
           }
         } else {
@@ -86,25 +87,26 @@ export class AppComponent {
     );
   }
 
-  deleteItem(index, event) {
+  deleteItem(id, event) {
     event.stopPropagation();
+    console.log(id);
+    console.log(this.items);
     console.log('deleting..');
-    console.log(index);
-    this._demoService.deleteItem(index).subscribe(
-      data => {console.log(this.items);
-                this.items.splice(this.items.findIndex(f => f.id = index), 1);
-                console.log(this.items);
-                console.log(index);
-                console.log(this.items.length);},
+    this._demoService.deleteItem(id).subscribe(
+      data => {this.items.splice(this.items.findIndex(f => f.id == id), 1);},
       err => console.error(err),
       () => console.log('done deleting item')
     );
   }
 
-  updateItem(item, index) {
+  updateItem(item, id) {
+    console.log(id);
+    console.log(this.items);
     console.log('updating..');
-    this._demoService.updateItem(item, index).subscribe(
-      data => this.items[index] = data,
+    this._demoService.updateItem(item, id).subscribe(
+      data => {console.log(this.items);
+                this.items[this.items.findIndex(f => f.id == id)] = data;
+                console.log(this.items);},
       err => console.error(err),
       () => console.log('done updating')
     );
