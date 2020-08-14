@@ -1,0 +1,3 @@
+.gitignore
+tsconfig.json
+git_push.sh

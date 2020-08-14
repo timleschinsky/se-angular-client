@@ -1,60 +1,102 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 <!-- Toolbar -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div class="toolbar" role="banner">
-</div>
+<mat-toolbar color="primary">
+    <span>Item API Angular Client</span>
+    <span class="example-spacer"></span>
+    <mat-form-field appearance="fill">
+        <mat-label>Favorite Food</mat-label>
+        <mat-select [(value)]="server" (selectionChange)="changeServer()">
+            <mat-option></mat-option>
+            <mat-option [value]="option.value" *ngFor="let option of servers">{{ option.viewValue }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-toolbar>
 
 <div class="content" role="main">
-
-  <!-- Resources -->
-  <h2>Item API Angular Client</h2>
-
-  <div class="card-container">
-    <button class="card" target="_blank" (click)="openItemDialog()">
-        Create Item
-    </button>
-    <button class="card" target="_blank" rel="noopener" (click)="listItems()">
-      List Items with details
-    </button>
-  </div>
-  <div class="card-container" id="list-container">
-    <div class="card" *ngFor="let item of items" (click)="openItemDialog(item, item.id)" id="{{item.id}}">
-        <mat-icon (click)="getItem(item.id, $event)">info</mat-icon>
-        {{item.name}}
-        <mat-icon (click)="deleteItem(item.id, $event)">delete</mat-icon>
+    <div class="card-container">
+        <button class="card" (click)="openItemDialog()">
+            Create Item
+        </button>
     </div>
-  </div>
-  <!-- Footer -->
-  <footer>
-      Service Engineering SS2020 @OVGU  &nbsp;
-      <a href="https://github.com/timleschinsky/se-angular-client" target="_blank" rel="noopener">
-        Client github<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-      </a>
-      <a href="https://github.com/timleschinsky/se-server" target="_blank" rel="noopener">
-        Spring Server github<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-      </a>
-  </footer>
+    <div class="example-container">
+        <form (ngSubmit)="listItems()" [formGroup]="form">
+            <mat-form-field appearance="fill">
+                <mat-label>Filter the name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Filter the description</mat-label>
+                <input matInput formControlName="description">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Filter the manufacturer</mat-label>
+                <input matInput formControlName="manufacturer">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Set a minimum price</mat-label>
+                <input matInput formControlName="priceGe">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Set a maximum price</mat-label>
+                <input matInput formControlName="priceLe">
+            </mat-form-field>
+            <button mat-raised-button type="submit" color="primary">Filter</button>
+            <button mat-raised-button type="reset" color="secondary" (click)="listItems(true)">Clear</button>
+        </form>
+    </div>
+    <div class="card-container" id="list-container">
+        <mat-card class="card" *ngFor="let item of items" id="{{item.id}}">
+            <mat-card-header>
+                <mat-card-title>{{item.name}}</mat-card-title>
+                <mat-card-subtitle>{{item.manufacturer ? item.manufacturer : 'unknown'}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Description: {{item.description}}</p>
+                <p>Price: {{item.price}}</p>
+                <p>Tax: {{item.tax}}</p>
+                <mat-card-actions>
+                    <button mat-stroked-button (click)="openItemDialog(item.id, item)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-stroked-button (click)="deleteItem(item.id, $event)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </mat-card>
+        <br/>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>Service Engineering SS2020 @OVGU</p><br/>
+        <a href="https://github.com/timleschinsky/se-angular-client" target="_blank" rel="noopener">
+            Client GitHub
+            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2"/>
+                <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+        </a>
+        <a href="https://github.com/timleschinsky/se-server" target="_blank" rel="noopener">
+            Spring Server GitHub
+            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2"/>
+                <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+        </a>
+        <a href="https://github.com/jenswet/se_fastapi_demo" target="_blank" rel="noopener">
+            FastApi Server GitHub
+            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2"/>
+                <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+        </a>
+    </footer>
 
-  <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
-    <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
-  </svg>
+    <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
+        <path id="Path_39" data-name="Path 39"
+              d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z"
+              transform="translate(142.69 -634.312)" fill="#eee"/>
+    </svg>
 
 </div>
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 
