@@ -3,11 +3,11 @@
 <mat-toolbar color="primary">
     <span>Item API Angular Client</span>
     <span class="example-spacer"></span>
-    <mat-form-field appearance="fill">
-        <mat-label>Favorite Food</mat-label>
-        <mat-select [(value)]="server" (selectionChange)="changeServer()">
+    <mat-form-field style="margin-top: 1rem" appearance="fill">
+        <mat-label style="font-size: medium;">Select Server</mat-label>
+        <mat-select style="font-size: medium;" [(value)]="server" (selectionChange)="changeServer()">
             <mat-option></mat-option>
-            <mat-option [value]="option.value" *ngFor="let option of servers">{{ option.viewValue }}</mat-option>
+            <mat-option style="font-size: medium;" [value]="option.value" *ngFor="let option of servers">{{ option.viewValue }}</mat-option>
         </mat-select>
     </mat-form-field>
 </mat-toolbar>
