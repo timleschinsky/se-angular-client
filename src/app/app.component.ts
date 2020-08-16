@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
     servers: Servers[] = environment.servers;
     server = this.servers[0].value;
 
-    constructor(private demoService: ItemService, private dialog: MatDialog, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
-        demoService.configuration.basePath = this.server;
+    constructor(private backendService: ItemService, private dialog: MatDialog, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+        backendService.configuration.basePath = this.server;
     }
 
     ngOnInit() {
@@ -84,11 +84,11 @@ export class AppComponent implements OnInit {
     }
 
     listItems(reset: boolean = false): void {
-        console.log('listing items from ' + this.demoService.configuration.basePath);
+        console.log('listing items from ' + this.backendService.configuration.basePath);
         if(reset) {
             this.form.reset();
         }
-        this.demoService.getItems(this.form.value.name?.length > 0 ? this.form.value.name : undefined, this.form.value.manufacturer?.length > 0 ? this.form.value.manufacturer : undefined, this.form.value.description?.length > 0 ? this.form.value.description : undefined, this.form.value.priceGe?.length > 0 ? Number(this.form.value.priceGe) : undefined, this.form.value.priceLe?.length > 0 ? Number(this.form.value.priceLe) : undefined,).subscribe(data => {
+        this.backendService.getItems(this.form.value.name?.length > 0 ? this.form.value.name : undefined, this.form.value.manufacturer?.length > 0 ? this.form.value.manufacturer : undefined, this.form.value.description?.length > 0 ? this.form.value.description : undefined, this.form.value.priceGe?.length > 0 ? Number(this.form.value.priceGe) : undefined, this.form.value.priceLe?.length > 0 ? Number(this.form.value.priceLe) : undefined,).subscribe(data => {
             console.log(data);
             this.items = data;
         }, err => this.handleError('Could not load items', 'Dismiss', err), () => console.log('done loading items'));
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit {
 
     createNew(item: Item): void {
         console.log('Creating..');
-        this.demoService.createItem(item).subscribe(data => {
+        this.backendService.createItem(item).subscribe(data => {
             this.items.push(data);
             console.log(data);
             this.showSuccessMessage('Item ' + data.name + ' created!', 'Cool');
@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
     deleteItem(id, event): void {
         event.stopPropagation();
         console.log('deleting..');
-        this.demoService.deleteItem(id).subscribe(data => {
+        this.backendService.deleteItem(id).subscribe(data => {
             this.items.splice(this.items.findIndex(f => f.id === id), 1);
             this.showSuccessMessage('Item deleted!', 'Cool');
         }, err => this.handleError('Could not delete the item', 'Dismiss', err), () => console.log('done deleting item'));
@@ -116,7 +116,7 @@ export class AppComponent implements OnInit {
     updateItem(id: number, item: Item): void {
         console.log(this.items);
         console.log('updating..');
-        this.demoService.updateItem(id, item).subscribe(data => {
+        this.backendService.updateItem(id, item).subscribe(data => {
             console.log(data);
             this.items[this.items.findIndex(f => f.id === id)] = data;
             console.log(this.items);
@@ -127,7 +127,7 @@ export class AppComponent implements OnInit {
 
     changeServer(): void {
         this.items = [];
-        this.demoService.configuration.basePath = this.server;
+        this.backendService.configuration.basePath = this.server;
         this.listItems(true);
     }
 
