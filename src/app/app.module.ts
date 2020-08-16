@@ -18,9 +18,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ApiModule} from '../generated/api';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, MatIconModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule, ApiModule, MatToolbarModule, MatSelectModule],
+    imports: [BrowserModule, FormsModule, MatIconModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule, MatDialogModule, MatInputModule, MatButtonModule, MatCardModule, MatFormFieldModule, ApiModule, MatToolbarModule, MatSelectModule, MatSnackBarModule],
     declarations: [AppComponent, ItemCardComponent],
     entryComponents: [ItemCardComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
