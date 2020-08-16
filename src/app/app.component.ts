@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ItemCardComponent} from './item-card/item-card.component';
 import {Item, ItemService} from '../generated/api';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {environment} from '../environments/environment';
 
 interface Servers {
     value: string;
@@ -20,15 +21,11 @@ export class AppComponent implements OnInit {
     public items: Item[] = [];
     dialogOpened = false;
     form: FormGroup;
-    servers: Servers[] = [{
-        value: 'http://localhost:8000', viewValue: 'Localhost'
-    }, {
-        value: 'http://error:8000', viewValue: 'Other'
-    }];
+    servers: Servers[] = environment.servers;
     server = this.servers[0].value;
 
     constructor(private demoService: ItemService, private dialog: MatDialog, private formBuilder: FormBuilder) {
-        demoService.configuration.basePath = 'http://localhost:8000';
+        demoService.configuration.basePath = this.server;
     }
 
     ngOnInit() {

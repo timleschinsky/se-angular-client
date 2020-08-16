@@ -5,9 +5,10 @@
     "ng": "ng",
     "start": "npm run openapi-generate && ng serve",
     "build": "npm run openapi-generate && ng build",
+    "build:prod": "npm run openapi-generate && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "openapi-generate": "openapi-generator generate -i http://127.0.0.1:8000/openapi.json -g typescript-angular -o src/generated/api"
+    "openapi-generate": "openapi-generator generate -i openapi.json -g typescript-angular -o src/generated/api"
   },
   "private": true,
   "dependencies": {

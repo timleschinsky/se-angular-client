@@ -1,0 +1,365 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Sample Item REST API",
+    "description": "This API provides access to the items in the sample app for Service Engineering Summer Term 2020.",
+    "version": "1.1.1",
+    "x-logo": {
+      "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://ovgu.jwet.de/",
+      "description": "Technical (do not use)"
+    },
+    {
+      "url": "https://ovgu.jwet.de/api/spring",
+      "description": "The Spring (contract-first) version of this SE API demo"
+    },
+    {
+      "url": "https://ovgu.jwet.de/api/fastapi",
+      "description": "The FastAPI (code-first) version of this SE API demo"
+    }
+  ],
+  "paths": {
+    "/item/": {
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Get Items Handler",
+        "operationId": "get_items",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Manufacturer",
+              "type": "string"
+            },
+            "name": "manufacturer",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Description",
+              "type": "string"
+            },
+            "name": "description",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Price Ge",
+              "type": "number",
+              "format": "double"
+            },
+            "name": "price_ge",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Price Le",
+              "type": "number",
+              "format": "double"
+            },
+            "name": "price_le",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Items Handler Item  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Create Item Handler",
+        "operationId": "create_item",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/item/{id}": {
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Get Item Handler",
+        "operationId": "get_item",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "integer"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Update Item Handler",
+        "operationId": "update_item",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "integer"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Delete Item Handler",
+        "operationId": "delete_item",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "integer"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "Item": {
+        "title": "Item",
+        "required": [
+          "name",
+          "price",
+          "manufacturer"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer",
+            "readOnly": true
+          },
+          "name": {
+            "title": "Name",
+            "maxLength": 25,
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "price": {
+            "title": "Price",
+            "minimum": 0.0,
+            "type": "number",
+            "format": "double"
+          },
+          "tax": {
+            "title": "Tax",
+            "minimum": 0.0,
+            "type": "number",
+            "format": "double"
+          },
+          "listed_since": {
+            "title": "Listed Since",
+            "type": "string",
+            "format": "date",
+            "readOnly": true
+          },
+          "manufacturer": {
+            "title": "Manufacturer",
+            "type": "string"
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
